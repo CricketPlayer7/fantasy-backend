@@ -10,6 +10,7 @@ import profileRouter from './profile'
 import userRouter from './user'
 import userMetaRouter from './user-meta'
 import walletRouter from './wallet'
+import gamificationRouter from './gamification'
 
 const router = express.Router()
 
@@ -24,5 +25,6 @@ router.use('/profile', profileRouter)
 router.use('/user', userRouter)
 router.use('/user-meta', userMetaRouter)
 router.use('/wallet', walletRouter)
+router.use('/gamification', gamificationRouter)
 
 export default router

@@ -115,3 +115,24 @@ export const tdsSchema = z.object({
   limit: z.number().int().min(1).max(100).default(10),
   offset: z.number().int().min(0).default(0),
 })
+
+export const gamificationQuerySchema = z.object({
+  type: z.enum(['all', 'tiers', 'badges', 'rewards', 'stats']).optional(),
+})
+
+export const badgeProgressQuerySchema = z.object({
+  progress: z.string().optional(),
+  stats: z.string().optional(),
+  rarity: z.string().optional(),
+  category: z.string().optional(),
+})
+
+export const predictionResultsQuerySchema = z.object({
+  match_id: z.string().min(1, 'Match ID is required'),
+  league_id: z.string().optional(),
+})
+
+export const tierProgressQuerySchema = z.object({
+  progression: z.string().optional(),
+  stats: z.string().optional(),
+})

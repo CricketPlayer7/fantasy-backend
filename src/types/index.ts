@@ -201,5 +201,26 @@ export interface TdsRequest {
   offset?: number
 }
 
+export interface GamificationQuery {
+  type?: string
+}
+
+export interface BadgeProgressQuery {
+  progress?: string
+  stats?: string
+  rarity?: string
+  category?: string
+}
+
+export interface PredictionResultsQuery {
+  match_id: string
+  league_id?: string
+}
+
+export interface TierProgressQuery {
+  progression?: string
+  stats?: string
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer
