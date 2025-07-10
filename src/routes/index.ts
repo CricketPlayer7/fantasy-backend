@@ -16,12 +16,13 @@ import notificationsRouter from './notifications'
 import startupRouter from './startup'
 import dashboardRouter from './dashboard'
 import getUsersRouter from './getUsers'
-import kyc from './admin/kyc'
-import gst from './admin/gst'
-import league from './admin/league'
-import answers from './admin/answers'
-import finance from './admin/finance'
-import matches from './admin/matches'
+import kycRouter from './admin/kyc'
+import gstRouter from './admin/gst'
+import leagueRouter from './admin/league'
+import answersRouter from './admin/answers'
+import financeRouter from './admin/finance'
+import matchesRouter from './admin/matches'
+import paymentDetailsRouter from './admin/paymentDetails'
 
 const router = express.Router()
 
@@ -42,11 +43,12 @@ router.use('/notifications', notificationsRouter)
 router.use('/startup', startupRouter)
 router.use('/dashboard', dashboardRouter)
 router.use('/get-users', getUsersRouter)
-router.use('/admin/kyc', kyc)
-router.use('/admin/gst', gst)
-router.use('/admin/league', league)
-router.use('/admin/answers', answers)
-router.use('/admin/finance', finance)
-router.use('/admin/matches', matches)
+router.use('/admin/kyc', kycRouter)
+router.use('/admin/gst', gstRouter)
+router.use('/admin/league', leagueRouter)
+router.use('/admin/answers', answersRouter)
+router.use('/admin/finance', financeRouter)
+router.use('/admin/matches', matchesRouter)
+router.use('/admin/payment-details', paymentDetailsRouter)
 
 export default router

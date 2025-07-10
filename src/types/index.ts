@@ -367,8 +367,8 @@ export interface League {
 	subtitle?: string
 	max_entries_per_user?: number
 	created_at: string
-  updated_at: string
-  [key: string]: any
+	updated_at: string
+	[key: string]: any
 }
 
 export interface UpdateLeagueInput {
@@ -384,32 +384,36 @@ export interface UpdateLeagueInput {
 }
 
 export interface AdminAnswer {
-  id?: string
-  match_id: string
-  league_id: string
-  question_answer: any
-  created_at?: string
-  [key: string]: any
+	id?: string
+	match_id: string
+	league_id: string
+	question_answer: any
+	created_at?: string
+	[key: string]: any
 }
 
 export interface MonthlyFinanceStats {
-  month: string
-  totalDeposits: number
-  totalWithdrawals: number
-  totalBonus: number
-  previousMonthDeposits: number
-  previousMonthWithdrawals: number
-  previousMonthBonus: number
+	month: string
+	totalDeposits: number
+	totalWithdrawals: number
+	totalBonus: number
+	previousMonthDeposits: number
+	previousMonthWithdrawals: number
+	previousMonthBonus: number
 }
 
 export interface MatchQueryInput {
 	series_type: string
 	match_state?: string
 	search?: string
-  }
-  
-  export interface MatchActionInput {
+}
+
+export interface MatchActionInput {
 	match_id: string
 	action: 'publish' | 'void'
-  }
-  
+}
+
+export interface PaymentMethodQuery {
+	user_id: string
+	method: 'bank' | 'upi'
+}

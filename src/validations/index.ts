@@ -201,48 +201,64 @@ export const getUsersQuerySchema = z.object({
 })
 
 export const updateKycStatusSchema = z.object({
-  submissionId: z.string().min(1, 'Submission ID is required'),
-  status: z.enum(['pending', 'approved', 'rejected'], {
-    errorMap: () => ({ message: 'Status must be pending, approved, or rejected' })
-  })
+	submissionId: z.string().min(1, 'Submission ID is required'),
+	status: z.enum(['pending', 'approved', 'rejected'], {
+		errorMap: () => ({
+			message: 'Status must be pending, approved, or rejected',
+		}),
+	}),
 })
 
 export const gstQuerySchema = z.object({
-  page: z.string().regex(/^\d+$/, 'Page must be a number').transform(Number).default('1'),
-  limit: z.string().regex(/^\d+$/, 'Limit must be a number').transform(Number).default('10')
+	page: z
+		.string()
+		.regex(/^\d+$/, 'Page must be a number')
+		.transform(Number)
+		.default('1'),
+	limit: z
+		.string()
+		.regex(/^\d+$/, 'Limit must be a number')
+		.transform(Number)
+		.default('10'),
 })
 
 export const updateLeagueSchema = z.object({
-  id: z.string().min(1, 'League ID is required'),
-  name: z.string().min(1).optional(),
-  prize: z.number().optional(),
-  description: z.string().optional(),
-  enabled: z.boolean().optional(),
-  no_of_questions: z.number().int().optional(),
-  entry_fee: z.number().optional(),
-  subtitle: z.string().optional(),
-  max_entries_per_user: z.number().int().optional()
+	id: z.string().min(1, 'League ID is required'),
+	name: z.string().min(1).optional(),
+	prize: z.number().optional(),
+	description: z.string().optional(),
+	enabled: z.boolean().optional(),
+	no_of_questions: z.number().int().optional(),
+	entry_fee: z.number().optional(),
+	subtitle: z.string().optional(),
+	max_entries_per_user: z.number().int().optional(),
 })
 
-
 export const getAdminAnswersQuerySchema = z.object({
-  match_id: z.string().min(1, 'Match ID is required'),
-  league_id: z.string().min(1, 'League ID is required')
+	match_id: z.string().min(1, 'Match ID is required'),
+	league_id: z.string().min(1, 'League ID is required'),
 })
 
 export const saveAdminAnswersSchema = z.object({
-  match_id: z.string().min(1, 'Match ID is required'),
-  league_id: z.string().min(1, 'League ID is required'),
-  question_answer: z.any()
+	match_id: z.string().min(1, 'Match ID is required'),
+	league_id: z.string().min(1, 'League ID is required'),
+	question_answer: z.any(),
 })
 
 export const matchQuerySchema = z.object({
-  series_type: z.string().min(1),
-  match_state: z.string().optional(),
-  search: z.string().optional()
+	series_type: z.string().min(1),
+	match_state: z.string().optional(),
+	search: z.string().optional(),
 })
 
 export const matchActionSchema = z.object({
-  match_id: z.string().min(1, 'Match ID is required'),
-  action: z.enum(['publish', 'void'])
+	match_id: z.string().min(1, 'Match ID is required'),
+	action: z.enum(['publish', 'void']),
+})
+
+export const paymentDetailsQuerySchema = z.object({
+	user_id: z.string().min(1, 'User ID is required'),
+	method: z.enum(['bank', 'upi'], {
+		errorMap: () => ({ message: 'Method must be either "bank" or "upi"' }),
+	}),
 })
