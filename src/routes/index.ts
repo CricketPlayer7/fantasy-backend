@@ -5,6 +5,7 @@ import couponsRouter from './coupons'
 import devicesRouter from './devices'
 import documentRouter from './document'
 import createOrderRouter from './createOrder'
+import cricketRouter from './cricket'
 
 const router = express.Router()
 
@@ -14,5 +15,6 @@ router.use('/coupons', couponsRouter)
 router.use('/devices', devicesRouter)
 router.use('/document', documentRouter)
 router.use('/create-order', createOrderRouter)
+router.use('/cricket', cricketRouter)
 
 export default router

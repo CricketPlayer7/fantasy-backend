@@ -48,5 +48,42 @@ export interface CreateOrderData {
   usage_id?: string | null
 }
 
+export interface CricketAnswersQuery {
+  league_id?: string
+}
+
+export interface UserAnswer {
+  user_id: string
+  league_id: string
+  match_id: string
+  question_id: string
+  answer: string
+  entry_id: string
+  ref_entry_id: string
+  [key: string]: any // Allow for any additional properties
+}
+
+export interface CricketLeaderboardQuery {
+  match_id?: string
+  league_id?: string
+  type?: string
+  limit?: string
+  offset?: string
+}
+
+export interface MatchInfo {
+  series_name: string
+  status: string
+  match_format: string
+  venue: string
+}
+
+export interface LeagueInfo {
+  name: string
+  entry_fee: number
+  prize: number
+  no_of_questions: number
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer

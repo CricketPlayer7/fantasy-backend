@@ -37,3 +37,23 @@ export const createOrderSchema = z.object({
   discount_applied: z.number().min(0).optional().nullable(),
   usage_id: z.string().optional().nullable()
 })
+
+export const cricketAnswersQuerySchema = z.object({
+  league_id: z.string().regex(/^\d+$/, 'League ID must be a number')
+})
+
+export const cricketLeaderboardQuerySchema = z.object({
+  match_id: z.string().regex(/^\d+$/, 'Match ID must be a number'),
+  league_id: z.string().regex(/^\d+$/, 'League ID must be a number').optional(),
+  type: z.enum(['match', 'league']).default('league'),
+  limit: z.string().regex(/^\d+$/, 'Limit must be a number').default('50').transform(Number),
+  offset: z.string().regex(/^\d+$/, 'Offset must be a number').default('0').transform(Number)
+}).refine(data => {
+  if (data.type === 'league' && !data.league_id) {
+    return false;
+  }
+  return true;
+}, {
+  message: 'league_id is required when type is "league"',
+  path: ['league_id']
+})
