@@ -33,4 +33,18 @@ router.patch(
 	notificationsController.bulkUpdate.bind(notificationsController)
 )
 
+// GET /api/notifications/preferences - Get notification preferences
+router.get(
+	'/preferences',
+	authMiddleware,
+	notificationsController.getNotificationPreferences.bind(notificationsController)
+)
+
+// PUT /api/notifications/preferences - Update notification preferences
+router.put(
+	'/preferences',
+	authMiddleware,
+	notificationsController.updateNotificationPreferences.bind(notificationsController)
+)
+
 export default router

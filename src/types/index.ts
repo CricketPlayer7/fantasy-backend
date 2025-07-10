@@ -317,12 +317,75 @@ export interface GetUsersResult {
 }
 
 export interface UserStats {
-	totalUsers: number
-	newUsersThisMonth: number
-	currentMonthDeposits: number
-	lastMonthDeposits: number
-	currentMonthWithdrawals: number
-	pendingKyc: number
+totalUsers: number
+newUsersThisMonth: number
+currentMonthDeposits: number
+lastMonthDeposits: number
+currentMonthWithdrawals: number
+pendingKyc: number
+}
+
+export interface SendNotificationRequest {
+  user_id: string
+  title: string
+  message: string
+  type: 'money_success' | 'money_failed' | 'withdrawal_approved' | 'withdrawal_rejected' |
+        'kyc_verified' | 'kyc_rejected' | 'contest_won' | 'contest_lost' | 'promotional'
+  data?: Record<string, any>
+}
+
+export interface SendBulkNotificationRequest {
+  title: string
+  message: string
+  type: 'money_success' | 'money_failed' | 'withdrawal_approved' | 'withdrawal_rejected' |
+        'kyc_verified' | 'kyc_rejected' | 'contest_won' | 'contest_lost' | 'promotional'
+  data?: Record<string, any>
+  user_ids?: string[]
+  filters?: {
+    status?: 'active' | 'banned' | 'pending'
+    device_type?: 'android' | 'ios'
+    has_device_token?: boolean
+  }
+}
+
+export interface BulkNotificationResult {
+  success: boolean
+  sent_count: number
+  failed_count: number
+  notification_ids: string[]
+  errors?: Array<{
+    user_id: string
+    error: string
+  }>
+}
+
+export interface NotificationPreferences {
+  user_id: string
+  push_enabled: boolean
+  email_enabled: boolean
+  sms_enabled: boolean
+  created_at?: string
+  updated_at?: string
+}
+
+export interface UpdateNotificationPreferencesRequest {
+  user_id: string
+  push_enabled: boolean
+  email_enabled: boolean
+  sms_enabled: boolean
+}
+
+export interface NotificationResponse {
+  id: string
+  user_id: string
+  title: string
+  message: string
+  type: string
+  data: Record<string, any>
+  read: boolean
+  clicked: boolean
+  created_at: string
+  updated_at: string
 }
 
 export interface KycRecord {

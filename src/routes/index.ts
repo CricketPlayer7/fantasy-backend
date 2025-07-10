@@ -26,6 +26,7 @@ import paymentDetailsRouter from './admin/paymentDetails'
 import questionsRouter from './admin/questions'
 import withdrawalsRouter from './admin/withdrawals'
 import userAdminRouter from './admin/user'
+import adminNotificationsRouter from './admin/notifications'
 
 const router = express.Router()
 
@@ -56,5 +57,6 @@ router.use('/admin/payment-details', paymentDetailsRouter)
 router.use('/admin/questions', questionsRouter)
 router.use('/admin/withdrawals', withdrawalsRouter)
 router.use('/admin/user', userAdminRouter)
+router.use('/admin/notifications', adminNotificationsRouter)
 
 export default router

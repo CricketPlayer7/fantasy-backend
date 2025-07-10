@@ -298,3 +298,37 @@ export const walletBonusSchema = z.object({
 	user_id: z.string().min(1, 'User ID is required'),
 	amount: z.number().positive('Amount must be positive'),
 })
+
+export const sendNotificationSchema = z.object({
+	user_id: z.string().uuid('Invalid user ID format'),
+	title: z.string().min(1, 'Title is required').max(255, 'Title too long'),
+	message: z.string().min(1, 'Message is required'),
+	type: z.enum([
+		'money_success', 'money_failed', 'withdrawal_approved', 'withdrawal_rejected',
+		'kyc_verified', 'kyc_rejected', 'contest_won', 'contest_lost', 'promotional'
+	]),
+	data: z.record(z.any()).optional().default({})
+})
+
+export const sendBulkNotificationSchema = z.object({
+	title: z.string().min(1, 'Title is required').max(255, 'Title too long'),
+	message: z.string().min(1, 'Message is required'),
+	type: z.enum([
+		'money_success', 'money_failed', 'withdrawal_approved', 'withdrawal_rejected',
+		'kyc_verified', 'kyc_rejected', 'contest_won', 'contest_lost', 'promotional'
+	]),
+	data: z.record(z.any()).optional().default({}),
+	user_ids: z.array(z.string().uuid('Invalid user ID format')).optional(),
+	filters: z.object({
+		status: z.enum(['active', 'banned', 'pending']).optional(),
+		device_type: z.enum(['android', 'ios']).optional(),
+		has_device_token: z.boolean().optional()
+	}).optional()
+})
+
+export const updateNotificationPreferencesSchema = z.object({
+	user_id: z.string().uuid('Invalid user ID format'),
+	push_enabled: z.boolean(),
+	email_enabled: z.boolean(),
+	sms_enabled: z.boolean()
+})
