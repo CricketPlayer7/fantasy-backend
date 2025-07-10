@@ -211,3 +211,15 @@ export const gstQuerySchema = z.object({
   page: z.string().regex(/^\d+$/, 'Page must be a number').transform(Number).default('1'),
   limit: z.string().regex(/^\d+$/, 'Limit must be a number').transform(Number).default('10')
 })
+
+export const updateLeagueSchema = z.object({
+  id: z.string().min(1, 'League ID is required'),
+  name: z.string().min(1).optional(),
+  prize: z.number().optional(),
+  description: z.string().optional(),
+  enabled: z.boolean().optional(),
+  no_of_questions: z.number().int().optional(),
+  entry_fee: z.number().optional(),
+  subtitle: z.string().optional(),
+  max_entries_per_user: z.number().int().optional()
+})

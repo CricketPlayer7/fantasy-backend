@@ -18,6 +18,7 @@ import dashboardRouter from './dashboard'
 import getUsersRouter from './getUsers'
 import kyc from './admin/kyc'
 import gst from './admin/gst'
+import league from './admin/league'
 
 const router = express.Router()
 
@@ -40,5 +41,6 @@ router.use('/dashboard', dashboardRouter)
 router.use('/get-users', getUsersRouter)
 router.use('/admin/kyc', kyc)
 router.use('/admin/gst', gst)
+router.use('/admin/league', league)
 
 export default router

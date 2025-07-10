@@ -90,21 +90,6 @@ export interface CricketLeagueQuery {
 	match_id?: string
 }
 
-export interface League {
-	league_id: number
-	name: string
-	description?: string
-	entry_fee: number
-	prize: number
-	no_of_questions: number
-	start_date: string
-	end_date: string
-	enabled: boolean
-	created_at: string
-	updated_at: string
-	[key: string]: any
-}
-
 export interface CricketMatchesListBody {
 	series_type?: string
 	series_id?: string
@@ -369,4 +354,31 @@ export interface GstRecord {
 export interface GstPaginationResult {
 	data: GstRecord[]
 	total: number
+}
+
+export interface League {
+	id: string
+	name: string
+	prize: number
+	description?: string
+	enabled: boolean
+	no_of_questions: number
+	entry_fee: number
+	subtitle?: string
+	max_entries_per_user?: number
+	created_at: string
+  updated_at: string
+  [key: string]: any
+}
+
+export interface UpdateLeagueInput {
+	id: string
+	name?: string
+	prize?: number
+	description?: string
+	enabled?: boolean
+	no_of_questions?: number
+	entry_fee?: number
+	subtitle?: string
+	max_entries_per_user?: number
 }
