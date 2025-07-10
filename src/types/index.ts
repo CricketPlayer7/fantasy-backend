@@ -451,3 +451,11 @@ export interface WithdrawalStats {
 	previousMonthPending: number
 	previousMonthApproved: number
 }
+
+export interface UserWallet {
+	user_id: string
+	email: string
+	full_name: string
+	wallet_amount: number
+	banned_until: string | null
+}

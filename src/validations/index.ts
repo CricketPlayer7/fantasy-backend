@@ -283,3 +283,18 @@ export const approveWithdrawalSchema = z.object({
 	user_id: z.string().min(1, 'User ID is required'),
 	amount: z.number().positive('Amount must be positive'),
 })
+
+export const paginationSchema = z.object({
+	page: z.string().optional().default('1').transform(Number),
+	perPage: z.string().optional().default('50').transform(Number),
+})
+
+export const banUserSchema = z.object({
+	user_id: z.string().min(1, 'User ID is required'),
+	ban: z.boolean(),
+})
+
+export const walletBonusSchema = z.object({
+	user_id: z.string().min(1, 'User ID is required'),
+	amount: z.number().positive('Amount must be positive'),
+})
