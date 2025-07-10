@@ -145,22 +145,3 @@ export const generateReferralSchema = z.object({
 export const redeemReferralSchema = z.object({
   referralToken: z.string().min(1, 'Referral token is required'),
 })
-
-export const notificationQuerySchema = z.object({
-  userId: z.string().optional(),
-  page: z.number().int().min(1).default(1),
-  limit: z.number().int().min(1).max(100).default(20),
-  unread: z.boolean().optional(),
-})
-
-export const notificationBulkActionSchema = z.object({
-  action: z.enum(['mark_all_read', 'mark_all_unread']),
-  notificationIds: z.array(z.string()).optional(),
-})
-
-export const notificationPreferencesSchema = z.object({
-  userId: z.string().min(1, 'User ID is required'),
-  pushEnabled: z.boolean(),
-  emailEnabled: z.boolean(),
-  smsEnabled: z.boolean(),
-})
