@@ -33,7 +33,7 @@ export class CreateOrderService {
         amount: (final_amount || amount) * 100, // Use final_amount (after discount) for Razorpay
         currency: 'INR',
         receipt: `receipt_${Date.now()}`,
-        payment_capture: 1, // Enable auto-capture
+        payment_capture: 1 as 1, // Explicitly type as 1 (not just number)
         notes: {
           user_name,
           user_id,

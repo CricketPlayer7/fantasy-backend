@@ -3,6 +3,7 @@ import { CreateOrderService } from '../services/createOrderService'
 import { createOrderSchema } from '../validations'
 import { asyncHandler, AppError } from '../utils/errorHandler'
 import { logger } from '../utils/logger'
+import { CreateOrderData } from '@/types'
 
 export class CreateOrderController {
   private createOrderService = new CreateOrderService()
@@ -14,10 +15,11 @@ export class CreateOrderController {
       throw new AppError('Invalid order data', 400)
     }
 
-    const orderData = validationResult.data
-    
-    // Add user_id from authenticated user
-    orderData.user_id = req.user.id
+    // Create a properly typed order data object
+    const orderData: CreateOrderData = {
+      ...validationResult.data,
+      user_id: req.user.id // Ensure user_id is always defined
+    }
     
     // Create the order
     const order = await this.createOrderService.createOrder(
