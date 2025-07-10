@@ -29,7 +29,10 @@ export class AuthService {
       return { success: true }
     } catch (error) {
       logger.error('Error in OTP verification:', error)
-      throw error
+      if (error instanceof AppError) {
+        throw error
+      }
+      throw new AppError('OTP verification failed', 500)
     }
   }
 

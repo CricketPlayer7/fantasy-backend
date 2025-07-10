@@ -4,54 +4,49 @@ import { EmailOtpType } from '@supabase/supabase-js'
 import { authConfirmSchema } from '../validations'
 import { AuthConfirmQuery } from '../types'
 import { config } from '../config'
+import { asyncHandler, AppError } from '../utils/errorHandler'
+import { logger } from '../utils/logger'
 
 export class AuthController {
   private authService = new AuthService()
 
-  async confirmAuth(req: Request, res: Response) {
-    try {
-      const query = req.query as AuthConfirmQuery
-      
-      // Validate query parameters
-      const validation = authConfirmSchema.safeParse(query)
-      if (!validation.success) {
-        const errorUrl = `${config.frontendUrl}/error`
-        return res.redirect(errorUrl)
-      }
-
-      const { token_hash, type } = validation.data
-      const next = '/home'
-
-      const { error } = await this.authService.verifyOtp(
-        token_hash, 
-        type as EmailOtpType
-      )
-      
-      if (!error) {
-        const redirectUrl = `${config.frontendUrl}${next}`
-        return res.redirect(redirectUrl)
-      }
-
-      const errorUrl = `${config.frontendUrl}/error`
-      return res.redirect(errorUrl)
-    } catch (error) {
-      console.error('Error confirming auth:', error)
-      const errorUrl = `${config.frontendUrl}/error`
-      return res.redirect(errorUrl)
-    }
-  }
-
-  async signOut(req: Request, res: Response) {
-    try {
-      await this.authService.signOut(req.supabase)
-      
-      res.json({
-        message: 'Logged out successfully',
-        status: 302,
+  confirmAuth = asyncHandler(async (req: Request, res: Response) => {
+    const query = req.query as AuthConfirmQuery
+    
+    // Validate query parameters
+    const validation = authConfirmSchema.safeParse(query)
+    if (!validation.success) {
+      logger.warn('Invalid OTP confirmation parameters', {
+        errors: validation.error.format()
       })
-    } catch (error) {
-      console.error('Error signing out:', error)
-      res.status(500).json({ error: 'Failed to sign out' })
+      const errorUrl = `${config.frontendUrl}/error`
+      return res.redirect(errorUrl)
     }
-  }
+
+    const { token_hash, type } = validation.data
+    const next = '/home'
+
+    const result = await this.authService.verifyOtp(
+      token_hash, 
+      type as EmailOtpType
+    )
+    
+    if (result.success) {
+      const redirectUrl = `${config.frontendUrl}${next}`
+      return res.redirect(redirectUrl)
+    }
+
+    // If verification failed, redirect to error page
+    const errorUrl = `${config.frontendUrl}/error`
+    return res.redirect(errorUrl)
+  })
+
+  signOut = asyncHandler(async (req: Request, res: Response) => {
+    await this.authService.signOut(req.supabase)
+    
+    res.json({
+      message: 'Logged out successfully',
+      status: 302,
+    })
+  })
 }

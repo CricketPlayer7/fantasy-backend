@@ -46,7 +46,10 @@ export class CouponsService {
 			return data
 		} catch (error) {
 			logger.error('Error in applyCoupon service:', error)
-			throw error
+			if (error instanceof AppError) {
+				throw error
+			}
+			throw new AppError('Failed to apply coupon', 500)
 		}
 	}
 
@@ -84,7 +87,10 @@ export class CouponsService {
 			}
 		} catch (error) {
 			logger.error('Error in getUserAvailableCoupons service:', error)
-			throw error
+			if (error instanceof AppError) {
+				throw error
+			}
+			throw new AppError('Failed to fetch available coupons', 500)
 		}
 	}
 }

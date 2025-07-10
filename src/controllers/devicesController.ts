@@ -8,44 +8,29 @@ export class DevicesController {
   private devicesService = new DevicesService()
 
   registerDevice = asyncHandler(async (req: Request, res: Response) => {
-    try {
-      // Validate device registration data
-      const validationResult = deviceRegisterSchema.safeParse(req.body)
-      if (!validationResult.success) {
-        return res.status(400).json({
-          error: 'Invalid device registration data',
-          details: validationResult.error.format(),
-        })
-      }
-
-      const { deviceToken, deviceType } = validationResult.data
-      const userId = req.user.id
-
-      // Register the device
-      const result = await this.devicesService.registerDevice(
-        req.supabase,
-        userId,
-        deviceToken,
-        deviceType
-      )
-
-      if (!result.success) {
-        return res.status(500).json({
-          success: false,
-          error: result.error,
-        })
-      }
-
-      return res.json({
-        success: true,
-        message: 'Device registered successfully',
-      })
-    } catch (error: any) {
-      logger.error('Error registering device:', error)
-      return res.status(500).json({
-        error: 'Failed to register device',
-        details: error.message,
+    // Validate device registration data
+    const validationResult = deviceRegisterSchema.safeParse(req.body)
+    if (!validationResult.success) {
+      return res.status(400).json({
+        error: 'Invalid device registration data',
+        details: validationResult.error.format(),
       })
     }
+
+    const { deviceToken, deviceType } = validationResult.data
+    const userId = req.user.id
+
+    // Register the device
+    const result = await this.devicesService.registerDevice(
+      req.supabase,
+      userId,
+      deviceToken,
+      deviceType
+    )
+
+    return res.json({
+      success: true,
+      message: 'Device registered successfully',
+    })
   })
 }
