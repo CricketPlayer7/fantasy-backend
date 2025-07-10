@@ -391,3 +391,13 @@ export interface AdminAnswer {
   created_at?: string
   [key: string]: any
 }
+
+export interface MonthlyFinanceStats {
+  month: string
+  totalDeposits: number
+  totalWithdrawals: number
+  totalBonus: number
+  previousMonthDeposits: number
+  previousMonthWithdrawals: number
+  previousMonthBonus: number
+}
