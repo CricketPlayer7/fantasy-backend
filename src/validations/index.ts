@@ -66,3 +66,14 @@ export const cricketLeagueParticipantsCountSchema = z.object({
 export const leagueIdSchema = z.object({
   league_id: z.number().int().positive('League ID must be a positive number')
 })
+
+export const cricketMatchesListSchema = z.object({
+  series_type: z.string().optional(),
+  series_id: z.string().optional(),
+  match_type: z.enum(['live', 'complete', 'upcoming']).optional()
+})
+
+export const paginationQuerySchema = z.object({
+  itemsPerPage: z.string().regex(/^\d+$/, 'Items per page must be a number').default('10').transform(Number),
+  pageIndex: z.string().regex(/^\d+$/, 'Page index must be a number').default('0').transform(Number)
+})

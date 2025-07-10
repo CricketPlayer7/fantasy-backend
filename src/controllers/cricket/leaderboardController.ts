@@ -4,8 +4,6 @@ import { CricketLeaderboardService } from '../../services/cricket/leaderboardSer
 import { logger } from '../../utils/logger'
 import { CricketLeaderboardQuery } from '../../types'
 import { cricketLeaderboardQuerySchema } from '../../validations'
-import { createClient } from '@supabase/supabase-js'
-import { config } from '../../config'
 
 export class CricketLeaderboardController {
   private leaderboardService = new CricketLeaderboardService()
@@ -22,17 +20,11 @@ export class CricketLeaderboardController {
 
     const { match_id, league_id, type, limit, offset } = validation.data
 
-    // Create supabase client without auth (public endpoint)
-    const supabase = createClient(
-      config.supabase.url,
-      config.supabase.anonKey,
-      {
-        auth: {
-          persistSession: false,
-          autoRefreshToken: false,
-        },
-      }
-    )
+    // Use authenticated supabase client from auth middleware
+    const supabase = req.supabase
+    if (!supabase) {
+      throw new AppError('Authentication required', 401)
+    }
 
     // Get leaderboard data
     const result = await this.leaderboardService.getLeaderboard(
@@ -45,6 +37,15 @@ export class CricketLeaderboardController {
         offset
       }
     )
+
+    logger.info('Leaderboard fetched successfully', {
+      userId: req.user?.id,
+      matchId: match_id,
+      leagueId: league_id,
+      type,
+      limit,
+      offset
+    })
 
     // Set cache headers
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300')

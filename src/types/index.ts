@@ -105,5 +105,38 @@ export interface League {
   [key: string]: any
 }
 
+export interface CricketMatchesListBody {
+  series_type?: string
+  series_id?: string
+  match_type?: 'live' | 'complete' | 'upcoming'
+}
+
+export interface PaginationQuery {
+  itemsPerPage: number
+  pageIndex: number
+}
+
+export interface Match {
+  id: string
+  series_type: string
+  series_id: string
+  match_state: string
+  start: number
+  is_match_enabled: boolean
+  [key: string]: any
+}
+
+export interface PaginationMetadata {
+  pageIndex: number
+  itemsPerPage: number
+  totalItems: number
+  totalPages: number
+}
+
+export interface CricketMatchesListResponse {
+  data: Match[]
+  pagination: PaginationMetadata
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer

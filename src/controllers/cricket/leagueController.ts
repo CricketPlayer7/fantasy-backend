@@ -4,27 +4,24 @@ import { CricketLeagueService } from '../../services/cricket/leagueService'
 import { logger } from '../../utils/logger'
 import { CricketLeagueQuery } from '../../types'
 import { cricketLeagueParticipantsCountSchema, leagueIdSchema } from '../../validations'
-import { createClient } from '@supabase/supabase-js'
-import { config } from '../../config'
 
 export class CricketLeagueController {
   private leagueService = new CricketLeagueService()
 
   getLeagues = asyncHandler(async (req: Request, res: Response) => {
-    // Create supabase client without auth (public endpoint)
-    const supabase = createClient(
-      config.supabase.url,
-      config.supabase.anonKey,
-      {
-        auth: {
-          persistSession: false,
-          autoRefreshToken: false,
-        },
-      }
-    )
+    // Use authenticated supabase client from auth middleware
+    const supabase = req.supabase
+    if (!supabase) {
+      throw new AppError('Authentication required', 401)
+    }
 
     // Get all enabled leagues
     const leagues = await this.leagueService.getEnabledLeagues(supabase)
+    
+    logger.info('Leagues fetched successfully', {
+      userId: req.user?.id,
+      leagueCount: leagues.length
+    })
     
     return res.json({
       data: leagues
@@ -40,20 +37,19 @@ export class CricketLeagueController {
 
     const { league_id } = validationResult.data
 
-    // Create supabase client without auth (public endpoint)
-    const supabase = createClient(
-      config.supabase.url,
-      config.supabase.anonKey,
-      {
-        auth: {
-          persistSession: false,
-          autoRefreshToken: false,
-        },
-      }
-    )
+    // Use authenticated supabase client from auth middleware
+    const supabase = req.supabase
+    if (!supabase) {
+      throw new AppError('Authentication required', 401)
+    }
 
     // Get league by ID
     const league = await this.leagueService.getLeagueById(supabase, league_id)
+    
+    logger.info('League fetched by ID successfully', {
+      userId: req.user?.id,
+      leagueId: league_id
+    })
     
     return res.json({
       data: league
@@ -72,17 +68,11 @@ export class CricketLeagueController {
 
     const { match_id, league_id } = validationResult.data
 
-    // Create supabase client without auth (public endpoint)
-    const supabase = createClient(
-      config.supabase.url,
-      config.supabase.anonKey,
-      {
-        auth: {
-          persistSession: false,
-          autoRefreshToken: false,
-        },
-      }
-    )
+    // Use authenticated supabase client from auth middleware
+    const supabase = req.supabase
+    if (!supabase) {
+      throw new AppError('Authentication required', 401)
+    }
 
     // Get participants count
     const count = await this.leagueService.getParticipantsCount(
@@ -90,6 +80,13 @@ export class CricketLeagueController {
       match_id,
       league_id
     )
+
+    logger.info('Participants count fetched successfully', {
+      userId: req.user?.id,
+      matchId: match_id,
+      leagueId: league_id,
+      count
+    })
 
     // Set cache header
     res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=90')
