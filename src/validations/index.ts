@@ -289,6 +289,12 @@ export const paginationSchema = z.object({
 	perPage: z.string().optional().default('50').transform(Number),
 })
 
+export const adminUsersPaginationSchema = z.object({
+	page: z.string().optional().default('1').transform(Number),
+	perPage: z.string().optional().default('50').transform(Number),
+	showBots: z.string().optional().default('false').transform((val) => val.toLowerCase() === 'true'),
+})
+
 export const banUserSchema = z.object({
 	user_id: z.string().min(1, 'User ID is required'),
 	ban: z.boolean(),

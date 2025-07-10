@@ -291,6 +291,12 @@ export interface GetUsersQuery {
 	sortOrder?: 'asc' | 'desc'
 }
 
+export interface AdminUsersQuery {
+	page: number
+	perPage: number
+	showBots: boolean
+}
+
 export interface UserWithStats {
 	id: string
 	email: string

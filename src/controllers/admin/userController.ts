@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { asyncHandler } from '../../utils/errorHandler'
 import { AdminUserService } from '../../services/admin/userService'
 import {
-	paginationSchema,
+	adminUsersPaginationSchema,
 	banUserSchema,
 	walletBonusSchema,
 } from '../../validations'
@@ -11,11 +11,12 @@ export class AdminUserController {
 	private service = new AdminUserService()
 
 	getUsers = asyncHandler(async (req: Request, res: Response) => {
-		const { page, perPage } = paginationSchema.parse(req.query)
+		const { page, perPage, showBots } = adminUsersPaginationSchema.parse(req.query)
 		const data = await this.service.getUsers(
 			req.supabaseAdmin,
 			page,
-			perPage
+			perPage,
+			showBots
 		)
 		res.json({ success: true, ...data })
 	})

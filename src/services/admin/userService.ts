@@ -1,18 +1,26 @@
 import { AppError } from '../../utils/errorHandler'
+import { AdminUsersQuery } from '../../types'
 
 export class AdminUserService {
-	async getUsers(supabase: any, page: number, perPage: number) {
+	async getUsers(supabase: any, page: number, perPage: number, showBots: boolean = false) {
 		const offset = (page - 1) * perPage
+
+		let query = supabase
+			.from('users_with_auth')
+			.select('*', { count: 'exact' })
+			.range(offset, offset + perPage - 1)
+			.order('meta_created_at', { ascending: false })
+
+		// Filter out bots by default (when showBots is false)
+		if (!showBots) {
+			query = query.eq('auth_is_bot', false)
+		}
 
 		const {
 			data: users,
 			error,
 			count,
-		} = await supabase
-			.from('users_with_auth')
-			.select('*', { count: 'exact' })
-			.range(offset, offset + perPage - 1)
-			.order('meta_created_at', { ascending: false })
+		} = await query
 
 		if (error) throw new AppError('Failed to fetch users', 500)
 
