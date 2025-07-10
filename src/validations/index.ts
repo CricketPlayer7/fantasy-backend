@@ -57,3 +57,12 @@ export const cricketLeaderboardQuerySchema = z.object({
   message: 'league_id is required when type is "league"',
   path: ['league_id']
 })
+
+export const cricketLeagueParticipantsCountSchema = z.object({
+  match_id: z.string().regex(/^\d+$/, 'Match ID must be a number'),
+  league_id: z.string().regex(/^\d+$/, 'League ID must be a number')
+})
+
+export const leagueIdSchema = z.object({
+  league_id: z.number().int().positive('League ID must be a positive number')
+})
