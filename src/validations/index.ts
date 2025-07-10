@@ -277,3 +277,9 @@ export const saveQuestionsBodySchema = z.object({
 		})
 	),
 })
+
+export const approveWithdrawalSchema = z.object({
+	withdrawal_id: z.string().min(1, 'Withdrawal ID is required'),
+	user_id: z.string().min(1, 'User ID is required'),
+	amount: z.number().positive('Amount must be positive'),
+})

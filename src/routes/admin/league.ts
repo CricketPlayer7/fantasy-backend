@@ -5,7 +5,7 @@ import { AdminLeagueController } from '../../controllers/admin/leagueController'
 const router = express.Router()
 const controller = new AdminLeagueController()
 
-router.get('/', adminAuthMiddleware, controller.getAllLeagues)
-router.post('/', adminAuthMiddleware, controller.updateLeague)
+router.get('/', adminAuthMiddleware, controller.getAllLeagues.bind(controller))
+router.post('/', adminAuthMiddleware, controller.updateLeague.bind(controller))
 
 export default router

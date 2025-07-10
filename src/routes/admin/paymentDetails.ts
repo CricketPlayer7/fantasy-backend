@@ -5,6 +5,10 @@ import { AdminPaymentDetailsController } from '../../controllers/admin/paymentDe
 const router = express.Router()
 const controller = new AdminPaymentDetailsController()
 
-router.get('/', adminAuthMiddleware, controller.getPaymentDetails)
+router.get(
+	'/',
+	adminAuthMiddleware,
+	controller.getPaymentDetails.bind(controller)
+)
 
 export default router

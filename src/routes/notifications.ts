@@ -9,15 +9,27 @@ const notificationsController = new NotificationsController()
 router.use(authMiddleware)
 
 // GET /api/notifications - List notifications
-router.get('/', notificationsController.getNotifications)
+router.get(
+	'/',
+	notificationsController.getNotifications.bind(notificationsController)
+)
 
 // PATCH /api/notifications/read - Mark as read
-router.patch('/read', notificationsController.markAsRead)
+router.patch(
+	'/read',
+	notificationsController.markAsRead.bind(notificationsController)
+)
 
 // PATCH /api/notifications/clicked - Mark as clicked
-router.patch('/clicked', notificationsController.markAsClicked)
+router.patch(
+	'/clicked',
+	notificationsController.markAsClicked.bind(notificationsController)
+)
 
 // PATCH /api/notifications/bulk-action - Bulk update
-router.patch('/bulk-action', notificationsController.bulkUpdate)
+router.patch(
+	'/bulk-action',
+	notificationsController.bulkUpdate.bind(notificationsController)
+)
 
 export default router

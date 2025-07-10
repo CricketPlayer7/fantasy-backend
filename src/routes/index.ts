@@ -24,6 +24,7 @@ import financeRouter from './admin/finance'
 import matchesRouter from './admin/matches'
 import paymentDetailsRouter from './admin/paymentDetails'
 import questionsRouter from './admin/questions'
+import withdrawalsRouter from './admin/withdrawals'
 
 const router = express.Router()
 
@@ -52,5 +53,6 @@ router.use('/admin/finance', financeRouter)
 router.use('/admin/matches', matchesRouter)
 router.use('/admin/payment-details', paymentDetailsRouter)
 router.use('/admin/questions', questionsRouter)
+router.use('/admin/withdrawals', withdrawalsRouter)
 
 export default router

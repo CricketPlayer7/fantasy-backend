@@ -423,3 +423,31 @@ export interface QuestionInput {
 	league_id: string
 	question: string
 }
+
+// Withdrawal Approval Record
+export interface WithdrawalApproval {
+	id: string
+	user_id: string
+	amount: number
+	status: 'pending' | 'success' | 'rejected'
+	created_at: string
+}
+
+// Wallet Transaction Record
+export interface WalletTransaction {
+	id: string
+	user_id: string
+	amount: number
+	transaction_type: 'deposit' | 'withdraw' | 'bonus'
+	status: 'pending' | 'success' | 'failed'
+	created_at: string
+	updated_at?: string
+}
+
+// Withdrawal Stats Summary
+export interface WithdrawalStats {
+	totalPending: number
+	totalApproved: number
+	previousMonthPending: number
+	previousMonthApproved: number
+}

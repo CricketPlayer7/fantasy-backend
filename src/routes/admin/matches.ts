@@ -5,7 +5,11 @@ import { AdminMatchesController } from '../../controllers/admin/matchesControlle
 const router = express.Router()
 const controller = new AdminMatchesController()
 
-router.get('/', adminAuthMiddleware, controller.getMatches)
-router.post('/', adminAuthMiddleware, controller.updateMatchAction)
+router.get('/', adminAuthMiddleware, controller.getMatches.bind(controller))
+router.post(
+	'/',
+	adminAuthMiddleware,
+	controller.updateMatchAction.bind(controller)
+)
 
 export default router

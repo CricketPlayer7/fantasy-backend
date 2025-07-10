@@ -5,6 +5,10 @@ import { AdminGstController } from '../../controllers/admin/gstController'
 const router = express.Router()
 const controller = new AdminGstController()
 
-router.get('/', adminAuthMiddleware, controller.getPaginatedGst)
+router.get(
+	'/',
+	adminAuthMiddleware,
+	controller.getPaginatedGst.bind(controller)
+)
 
 export default router

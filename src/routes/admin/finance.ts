@@ -5,7 +5,7 @@ import { AdminFinanceController } from '../../controllers/admin/financeControlle
 const router = express.Router()
 const controller = new AdminFinanceController()
 
-router.get('/stats', adminAuthMiddleware, controller.getMonthlyStats)
-router.get('/export', adminAuthMiddleware, controller.exportGstToCsv)
+router.get('/stats', adminAuthMiddleware, controller.getMonthlyStats.bind(controller))
+router.get('/export', adminAuthMiddleware, controller.exportGstToCsv.bind(controller))
 
 export default router

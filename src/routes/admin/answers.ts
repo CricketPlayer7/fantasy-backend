@@ -5,7 +5,15 @@ import { AdminAnswersController } from '../../controllers/admin/answersControlle
 const router = express.Router()
 const controller = new AdminAnswersController()
 
-router.get('/', adminAuthMiddleware, controller.getAdminAnswers)
-router.post('/', adminAuthMiddleware, controller.saveAdminAnswers)
+router.get(
+	'/',
+	adminAuthMiddleware,
+	controller.getAdminAnswers.bind(controller)
+)
+router.post(
+	'/',
+	adminAuthMiddleware,
+	controller.saveAdminAnswers.bind(controller)
+)
 
 export default router

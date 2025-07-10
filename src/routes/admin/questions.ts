@@ -5,7 +5,7 @@ import { AdminQuestionsController } from '../../controllers/admin/questionsContr
 const router = express.Router()
 const controller = new AdminQuestionsController()
 
-router.get('/', adminAuthMiddleware, controller.getQuestions)
-router.post('/', adminAuthMiddleware, controller.saveQuestions)
+router.get('/', adminAuthMiddleware, controller.getQuestions.bind(controller))
+router.post('/', adminAuthMiddleware, controller.saveQuestions.bind(controller))
 
 export default router
