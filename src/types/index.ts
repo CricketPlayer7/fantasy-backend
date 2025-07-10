@@ -152,5 +152,18 @@ export interface Gender {
   [key: string]: any
 }
 
+export interface UserActivityRequest {
+  activity_type: string
+}
+
+export interface UserActivityLog {
+  current_streak: number
+  last_activity_date: string
+  total_active_days: number
+  longest_streak: number
+  streak_start_date: string
+  [key: string]: any
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer

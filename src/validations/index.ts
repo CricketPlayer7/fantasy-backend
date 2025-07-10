@@ -86,3 +86,7 @@ export const cricketMatchSchema = z.object({
 })
 
 export const profileGenderSchema = z.object({})
+
+export const userActivitySchema = z.object({
+  activity_type: z.string().min(1, 'Activity type is required')
+})
