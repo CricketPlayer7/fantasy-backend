@@ -15,6 +15,7 @@ import referralRouter from './referral'
 import notificationsRouter from './notifications'
 import startupRouter from './startup'
 import dashboardRouter from './dashboard'
+import getUsersRouter from './getUsers'
 
 const router = express.Router()
 
@@ -34,5 +35,6 @@ router.use('/referral', referralRouter)
 router.use('/notifications', notificationsRouter)
 router.use('/startup', startupRouter)
 router.use('/dashboard', dashboardRouter)
+router.use('/get-users', getUsersRouter)
 
 export default router

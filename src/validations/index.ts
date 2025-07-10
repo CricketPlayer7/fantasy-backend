@@ -150,3 +150,12 @@ export const notificationBulkActionSchema = z.object({
   action: z.enum(['mark_all_read', 'mark_all_unread']),
   notificationIds: z.array(z.string()).optional()
 })
+
+export const getUsersQuerySchema = z.object({
+  page: z.string().regex(/^\d+$/, 'Page must be a number').optional().default('1').transform(Number),
+  limit: z.string().regex(/^\d+$/, 'Limit must be a number').optional().default('50').transform(Number),
+  search: z.string().optional(),
+  status: z.enum(['active', 'banned', 'pending']).optional(),
+  sortBy: z.enum(['created_at', 'email', 'last_sign_in_at']).optional().default('created_at'),
+  sortOrder: z.enum(['asc', 'desc']).optional().default('desc')
+})

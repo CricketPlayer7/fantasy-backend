@@ -297,5 +297,48 @@ export interface DatabaseKyc {
   [key: string]: any
 }
 
+export interface GetUsersQuery {
+  page?: number
+  limit?: number
+  search?: string
+  status?: 'active' | 'banned' | 'pending'
+  sortBy?: 'created_at' | 'email' | 'last_sign_in_at'
+  sortOrder?: 'asc' | 'desc'
+}
+
+export interface UserWithStats {
+  id: string
+  email: string
+  created_at: string
+  last_sign_in_at: string
+  email_confirmed_at: string
+  banned_until?: string
+  user_metadata: any
+  totalDeposits: number
+  totalWithdrawals: number
+  walletBalance: number
+  kycStatus: 'pending' | 'approved' | 'rejected' | 'not_submitted'
+  isActive: boolean
+}
+
+export interface GetUsersResult {
+  users: UserWithStats[]
+  pagination: {
+    page: number
+    limit: number
+    total: number
+    totalPages: number
+  }
+}
+
+export interface UserStats {
+  totalUsers: number
+  newUsersThisMonth: number
+  currentMonthDeposits: number
+  lastMonthDeposits: number
+  currentMonthWithdrawals: number
+  pendingKyc: number
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer
