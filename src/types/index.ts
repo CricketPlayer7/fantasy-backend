@@ -185,5 +185,21 @@ export interface UserMeta {
   [key: string]: any
 }
 
+export interface WalletTransactionRequest {
+  user_id?: string
+  transaction_type?: string
+  date?: string
+  status?: string
+  limit?: number
+  offset?: number
+}
+
+export interface TdsRequest {
+  user_id?: string
+  date?: string
+  limit?: number
+  offset?: number
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer

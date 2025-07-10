@@ -99,3 +99,19 @@ export const userMetaUpdateSchema = z.object({
   pincode: z.number().int().min(100000).max(999999).optional(),
   state: z.string().max(100).optional(),
 })
+
+export const walletTransactionSchema = z.object({
+  user_id: z.string().optional(),
+  transaction_type: z.string().optional(),
+  date: z.string().optional(),
+  status: z.string().optional(),
+  limit: z.number().int().min(1).max(100).default(10),
+  offset: z.number().int().min(0).default(0),
+})
+
+export const tdsSchema = z.object({
+  user_id: z.string().optional(),
+  date: z.string().optional(),
+  limit: z.number().int().min(1).max(100).default(10),
+  offset: z.number().int().min(0).default(0),
+})
