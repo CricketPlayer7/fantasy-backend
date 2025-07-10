@@ -60,6 +60,12 @@ export const config = {
 	scorecard: {
 		cacheTTL: parseInt(process.env.SCORECARD_CACHE_TTL || '15'),
 	},
+
+	externalApi: {
+		baseUrl: process.env.NEXT_PUBLIC_API_URL,
+		apiHost: process.env.NEXT_PUBLIC_API_HOST,
+		apiKey: process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
+	},
 }
 
 // Validate required environment variables

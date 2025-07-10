@@ -77,3 +77,10 @@ export const paginationQuerySchema = z.object({
   itemsPerPage: z.string().regex(/^\d+$/, 'Items per page must be a number').default('10').transform(Number),
   pageIndex: z.string().regex(/^\d+$/, 'Page index must be a number').default('0').transform(Number)
 })
+
+export const cricketMatchSchema = z.object({
+  match_id: z.union([
+    z.string().regex(/^\d+$/, 'Match ID must be a number'),
+    z.number().int().positive('Match ID must be a positive number')
+  ])
+})
