@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-export const authMiddleware = async (
+export const adminAuthMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -64,6 +64,7 @@ export const authMiddleware = async (
       throw new AppError('Missing authentication tokens', 401)
     }
 
+    // Create regular client for user verification
     const supabase = createClient(
       config.supabase.url,
       config.supabase.anonKey,
@@ -75,6 +76,19 @@ export const authMiddleware = async (
       }
     )
 
+    // Create admin client with service role key
+    const supabaseAdmin = createClient(
+      config.supabase.url,
+      config.supabase.serviceRoleKey,
+      {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+        },
+      }
+    )
+
+    // Set session on regular client to get user info
     supabase.auth.setSession({
       access_token: accessToken,
       refresh_token: refreshToken,
@@ -87,8 +101,29 @@ export const authMiddleware = async (
       throw new AppError('Invalid authentication', 401)
     }
 
+    // Check if user is admin using the RPC function
+    const { data: isAdmin, error: adminError } = await supabaseAdmin.rpc('is_admin', {
+      user_id: user.id
+    })
+
+    if (adminError) {
+      logger.error('Error checking admin status:', { 
+        error: adminError.message, 
+        userId: user.id 
+      })
+      throw new AppError('Error verifying admin status', 500)
+    }
+
+    if (!isAdmin) {
+      logger.warn('Access denied - user is not admin:', { userId: user.id })
+      throw new AppError('Access denied. Admin privileges required.', 403)
+    }
+
+    logger.info('Admin authentication successful:', { userId: user.id })
+
     req.user = user
     req.supabase = supabase
+    req.supabaseAdmin = supabaseAdmin
     next()
   } catch (error) {
     next(error)

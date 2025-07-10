@@ -14,6 +14,7 @@ import gamificationRouter from './gamification'
 import referralRouter from './referral'
 import notificationsRouter from './notifications'
 import startupRouter from './startup'
+import dashboardRouter from './dashboard'
 
 const router = express.Router()
 
@@ -32,5 +33,6 @@ router.use('/gamification', gamificationRouter)
 router.use('/referral', referralRouter)
 router.use('/notifications', notificationsRouter)
 router.use('/startup', startupRouter)
+router.use('/dashboard', dashboardRouter)
 
 export default router

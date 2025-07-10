@@ -243,5 +243,59 @@ export interface NotificationBulkAction {
   notificationIds?: string[]
 }
 
+export interface DashboardData {
+  totalUsers: number
+  newUsersThisMonth: number
+  currentMonthDeposits: number
+  lastMonthDeposits: number
+  currentMonthWithdrawals: number
+  pendingKyc: number
+  dailyUserStats: Array<{
+    date: string
+    users: number
+  }>
+  dailyTransactionStats: Array<{
+    date: string
+    deposits: number
+    withdrawals: number
+  }>
+  monthlyStats: Array<{
+    month: string
+    deposits: number
+    withdrawals: number
+  }>
+}
+
+export interface DatabaseUser {
+  id: string
+  created_at: string
+  [key: string]: any
+}
+
+export interface DatabaseTransaction {
+  id: string
+  amount: number
+  transaction_type: 'credit' | 'debit'
+  created_at: string
+  [key: string]: any
+}
+
+export interface DatabaseWalletTransaction {
+  id: string
+  amount: number
+  transaction_type: 'withdraw' | 'deposit'
+  status: 'success' | 'pending' | 'failed'
+  created_at: string
+  [key: string]: any
+}
+
+export interface DatabaseKyc {
+  id: string
+  user_id: string
+  status: 'pending' | 'approved' | 'rejected'
+  created_at: string
+  [key: string]: any
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer
