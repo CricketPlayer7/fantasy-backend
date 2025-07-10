@@ -146,5 +146,11 @@ export interface ScorecardRequest {
   match_id: string | number
 }
 
+export interface Gender {
+  id: number
+  name: string
+  [key: string]: any
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer

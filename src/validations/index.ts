@@ -84,3 +84,5 @@ export const cricketMatchSchema = z.object({
     z.number().int().positive('Match ID must be a positive number')
   ])
 })
+
+export const profileGenderSchema = z.object({})

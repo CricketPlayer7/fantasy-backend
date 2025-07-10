@@ -6,6 +6,7 @@ import devicesRouter from './devices'
 import documentRouter from './document'
 import createOrderRouter from './createOrder'
 import cricketRouter from './cricket'
+import profileRouter from './profile'
 
 const router = express.Router()
 
@@ -16,5 +17,6 @@ router.use('/devices', devicesRouter)
 router.use('/document', documentRouter)
 router.use('/create-order', createOrderRouter)
 router.use('/cricket', cricketRouter)
+router.use('/profile', profileRouter)
 
 export default router
