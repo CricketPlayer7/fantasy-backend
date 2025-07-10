@@ -339,6 +339,3 @@ export interface UserStats {
   currentMonthWithdrawals: number
   pendingKyc: number
 }
-
-// No need to extend Express Request interface for multer 2.x
-// as the types are already properly defined in @types/multer

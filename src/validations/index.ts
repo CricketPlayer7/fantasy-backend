@@ -159,3 +159,9 @@ export const getUsersQuerySchema = z.object({
   sortBy: z.enum(['created_at', 'email', 'last_sign_in_at']).optional().default('created_at'),
   sortOrder: z.enum(['asc', 'desc']).optional().default('desc')
 })
+
+
+export const updateKycStatusSchema = z.object({
+  submissionId: z.string().min(1, 'Submission ID is required'),
+  status: z.string().min(1, 'Status is required')
+})
