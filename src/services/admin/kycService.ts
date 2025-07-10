@@ -1,8 +1,9 @@
 import { AppError } from '../../utils/errorHandler'
 import { logger } from '../../utils/logger'
+import { KycRecord } from '../../types'
 
 export class AdminKycService {
-	async fetchAllSubmissions(supabaseAdmin: any) {
+	async fetchAllSubmissions(supabaseAdmin: any): Promise<KycRecord[]> {
 		const { data, error } = await supabaseAdmin
 			.from('kyc')
 			.select('*')
@@ -13,14 +14,14 @@ export class AdminKycService {
 			throw new AppError('Failed to fetch KYC submissions', 500)
 		}
 
-		return data
+		return data as KycRecord[]
 	}
 
 	async updateSubmissionStatus(
 		supabaseAdmin: any,
 		submissionId: string,
-		status: string
-	) {
+		status: 'pending' | 'approved' | 'rejected'
+	): Promise<void> {
 		const { error } = await supabaseAdmin
 			.from('kyc')
 			.update({
