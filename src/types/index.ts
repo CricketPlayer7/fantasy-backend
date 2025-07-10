@@ -382,3 +382,12 @@ export interface UpdateLeagueInput {
 	subtitle?: string
 	max_entries_per_user?: number
 }
+
+export interface AdminAnswer {
+  id?: string
+  match_id: string
+  league_id: string
+  question_answer: any
+  created_at?: string
+  [key: string]: any
+}

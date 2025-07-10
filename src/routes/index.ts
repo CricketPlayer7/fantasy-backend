@@ -19,6 +19,7 @@ import getUsersRouter from './getUsers'
 import kyc from './admin/kyc'
 import gst from './admin/gst'
 import league from './admin/league'
+import answers from './admin/answers'
 
 const router = express.Router()
 
@@ -42,5 +43,6 @@ router.use('/get-users', getUsersRouter)
 router.use('/admin/kyc', kyc)
 router.use('/admin/gst', gst)
 router.use('/admin/league', league)
+router.use('/admin/answers', answers)
 
 export default router

@@ -223,3 +223,15 @@ export const updateLeagueSchema = z.object({
   subtitle: z.string().optional(),
   max_entries_per_user: z.number().int().optional()
 })
+
+
+export const getAdminAnswersQuerySchema = z.object({
+  match_id: z.string().min(1, 'Match ID is required'),
+  league_id: z.string().min(1, 'League ID is required')
+})
+
+export const saveAdminAnswersSchema = z.object({
+  match_id: z.string().min(1, 'Match ID is required'),
+  league_id: z.string().min(1, 'League ID is required'),
+  question_answer: z.any()
+})
