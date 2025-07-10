@@ -11,4 +11,10 @@ router.post(
   devicesController.registerDevice.bind(devicesController)
 )
 
+router.delete(
+  '/remove',
+  authMiddleware,
+  devicesController.removeDevice.bind(devicesController)
+)
+
 export default router

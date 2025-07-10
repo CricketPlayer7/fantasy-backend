@@ -52,4 +52,39 @@ export class DevicesService {
 			throw new AppError('Failed to register device', 500)
 		}
 	}
+
+	async removeDevice(
+		supabase: any,
+		userId: string,
+		deviceToken: string
+	): Promise<void> {
+		try {
+			// Update device to mark as inactive
+			const { error } = await supabase
+				.from('user_devices')
+				.update({ is_active: false })
+				.eq('device_token', deviceToken)
+				.eq('user_id', userId)
+
+			if (error) {
+				logger.error('Database error when removing device:', {
+					error: error.message,
+					userId,
+					deviceToken,
+				})
+				throw new AppError(`Failed to remove device: ${error.message}`, 500)
+			}
+
+			logger.info('Device removed successfully:', {
+				userId,
+				deviceToken,
+			})
+		} catch (error) {
+			logger.error('Error in removeDevice service:', error)
+			if (error instanceof AppError) {
+				throw error
+			}
+			throw new AppError('Failed to remove device', 500)
+		}
+	}
 }

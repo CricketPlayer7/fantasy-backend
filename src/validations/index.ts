@@ -25,3 +25,15 @@ export const deviceRegisterSchema = z.object({
   deviceToken: z.string().min(1, 'Device token is required'),
   deviceType: z.enum(['android', 'ios', 'web']).default('android')
 })
+
+export const createOrderSchema = z.object({
+  amount: z.number().positive('Amount must be positive'),
+  user_name: z.string().min(1, 'User name is required'),
+  user_id: z.string().optional(),  // Will be added from the authenticated user
+  coupon_id: z.string().optional().nullable(),
+  coupon_code: z.string().optional().nullable(),
+  original_amount: z.number().positive().optional().nullable(),
+  final_amount: z.number().positive().optional().nullable(),
+  discount_applied: z.number().min(0).optional().nullable(),
+  usage_id: z.string().optional().nullable()
+})

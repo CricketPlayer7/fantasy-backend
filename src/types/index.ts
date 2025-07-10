@@ -36,5 +36,17 @@ export interface MulterFile {
   size: number
 }
 
+export interface CreateOrderData {
+  amount: number
+  user_name: string
+  user_id: string
+  coupon_id?: string | null
+  coupon_code?: string | null
+  original_amount?: number | null
+  final_amount?: number | null
+  discount_applied?: number | null
+  usage_id?: string | null
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer
