@@ -222,5 +222,26 @@ export interface TierProgressQuery {
   stats?: string
 }
 
+export interface NotificationsListQuery {
+  userId?: string
+  page?: string
+  limit?: string
+  unread?: string
+}
+
+export interface NotificationReadQuery {
+  id?: string
+  userId?: string
+}
+
+export interface NotificationClickedQuery {
+  id?: string
+}
+
+export interface NotificationBulkAction {
+  action: string
+  notificationIds?: string[]
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer

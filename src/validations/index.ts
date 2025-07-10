@@ -145,3 +145,8 @@ export const generateReferralSchema = z.object({
 export const redeemReferralSchema = z.object({
   referralToken: z.string().min(1, 'Referral token is required'),
 })
+
+export const notificationBulkActionSchema = z.object({
+  action: z.enum(['mark_all_read', 'mark_all_unread']),
+  notificationIds: z.array(z.string()).optional()
+})

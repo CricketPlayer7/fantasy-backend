@@ -12,6 +12,8 @@ import userMetaRouter from './user-meta'
 import walletRouter from './wallet'
 import gamificationRouter from './gamification'
 import referralRouter from './referral'
+import notificationsRouter from './notifications'
+import startupRouter from './startup'
 
 const router = express.Router()
 
@@ -28,5 +30,7 @@ router.use('/user-meta', userMetaRouter)
 router.use('/wallet', walletRouter)
 router.use('/gamification', gamificationRouter)
 router.use('/referral', referralRouter)
+router.use('/notifications', notificationsRouter)
+router.use('/startup', startupRouter)
 
 export default router
