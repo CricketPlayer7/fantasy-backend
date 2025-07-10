@@ -401,3 +401,15 @@ export interface MonthlyFinanceStats {
   previousMonthWithdrawals: number
   previousMonthBonus: number
 }
+
+export interface MatchQueryInput {
+	series_type: string
+	match_state?: string
+	search?: string
+  }
+  
+  export interface MatchActionInput {
+	match_id: string
+	action: 'publish' | 'void'
+  }
+  

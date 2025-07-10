@@ -235,3 +235,14 @@ export const saveAdminAnswersSchema = z.object({
   league_id: z.string().min(1, 'League ID is required'),
   question_answer: z.any()
 })
+
+export const matchQuerySchema = z.object({
+  series_type: z.string().min(1),
+  match_state: z.string().optional(),
+  search: z.string().optional()
+})
+
+export const matchActionSchema = z.object({
+  match_id: z.string().min(1, 'Match ID is required'),
+  action: z.enum(['publish', 'void'])
+})

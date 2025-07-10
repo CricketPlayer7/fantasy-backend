@@ -21,6 +21,7 @@ import gst from './admin/gst'
 import league from './admin/league'
 import answers from './admin/answers'
 import finance from './admin/finance'
+import matches from './admin/matches'
 
 const router = express.Router()
 
@@ -46,5 +47,6 @@ router.use('/admin/gst', gst)
 router.use('/admin/league', league)
 router.use('/admin/answers', answers)
 router.use('/admin/finance', finance)
+router.use('/admin/matches', matches)
 
 export default router
