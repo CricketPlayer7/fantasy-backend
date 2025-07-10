@@ -3,6 +3,8 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import { rateLimitMiddleware } from './middleware/rateLimit'
+import { errorHandler } from './utils/errorHandler'
+import { logger } from './utils/logger'
 import { config } from './config'
 import routes from './routes'
 
@@ -31,6 +33,15 @@ const createApp = () => {
   app.use(express.urlencoded({ extended: true, limit: '10mb' }))
   app.use(cookieParser())
 
+  // Request logging
+  app.use((req, res, next) => {
+    logger.info(`${req.method} ${req.path}`, {
+      ip: req.ip,
+      userAgent: req.get('User-Agent')
+    })
+    next()
+  })
+
   // Health check
   app.get('/health', (req, res) => {
     res.json({ 
@@ -45,16 +56,12 @@ const createApp = () => {
 
   // 404 handler
   app.use('*', (req, res) => {
+    logger.warn(`Route not found: ${req.method} ${req.originalUrl}`)
     res.status(404).json({ error: 'Route not found' })
   })
 
   // Global error handler
-  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    console.error('Error:', err)
-    res.status(err.status || 500).json({ 
-      error: config.nodeEnv === 'production' ? 'Internal server error' : err.message 
-    })
-  })
+  app.use(errorHandler)
 
   return app
 }

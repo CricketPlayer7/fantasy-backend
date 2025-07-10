@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
 import { createClient } from '@supabase/supabase-js'
 import { config } from '../config'
+import { logger } from '../utils/logger'
+import { AppError } from '../utils/errorHandler'
 
 declare global {
   namespace Express {
@@ -23,8 +25,8 @@ export const authMiddleware = async (
     const cookieHeader = req.headers.cookie
     
     if (cookieHeader) {
-      // Try simple format first (auth_token, refresh_token)
-      const simpleAccessMatch = cookieHeader.match(/auth_token=([^;]+)/)
+      // Try simple format first (access_token, refresh_token)
+      const simpleAccessMatch = cookieHeader.match(/access_token=([^;]+)/)
       const simpleRefreshMatch = cookieHeader.match(/refresh_token=([^;]+)/)
 
       if (simpleAccessMatch && simpleRefreshMatch) {
@@ -58,8 +60,7 @@ export const authMiddleware = async (
     }
 
     if (!accessToken || !refreshToken) {
-      res.status(401).json({ error: 'Unauthorized' })
-      return
+      throw new AppError('Missing authentication tokens', 401)
     }
 
     const supabase = createClient(
@@ -81,14 +82,14 @@ export const authMiddleware = async (
     const { data: { user }, error } = await supabase.auth.getUser()
 
     if (error || !user) {
-      res.status(401).json({ error: 'Unauthorized' })
-      return
+      logger.warn('Authentication failed:', { error: error?.message, userId: user?.id })
+      throw new AppError('Invalid authentication', 401)
     }
 
     req.user = user
     req.supabase = supabase
     next()
   } catch (error) {
-    res.status(401).json({ error: 'Unauthorized' })
+    next(error)
   }
 }

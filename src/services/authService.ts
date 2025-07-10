@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 import { EmailOtpType } from '@supabase/supabase-js'
 import { config } from '../config'
+import { logger } from '../utils/logger'
+import { AppError } from '../utils/errorHandler'
 
 export class AuthService {
   private createSupabaseClient() {
@@ -11,21 +13,39 @@ export class AuthService {
   }
 
   async verifyOtp(tokenHash: string, type: EmailOtpType) {
-    const supabase = this.createSupabaseClient()
-    const { error } = await supabase.auth.verifyOtp({
-      type,
-      token_hash: tokenHash,
-    })
-    return { error }
+    try {
+      const supabase = this.createSupabaseClient()
+      const { error } = await supabase.auth.verifyOtp({
+        type,
+        token_hash: tokenHash,
+      })
+      
+      if (error) {
+        logger.warn('OTP verification failed:', { error: error.message, type })
+        throw new AppError('OTP verification failed', 400)
+      }
+      
+      logger.info('OTP verified successfully', { type })
+      return { success: true }
+    } catch (error) {
+      logger.error('Error in OTP verification:', error)
+      throw error
+    }
   }
 
   async signOut(supabase: any) {
-    const { data: { user } } = await supabase.auth.getUser()
-    
-    if (user) {
-      await supabase.auth.signOut()
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      if (user) {
+        await supabase.auth.signOut()
+        logger.info('User signed out successfully', { userId: user.id })
+      }
+      
+      return { success: true }
+    } catch (error) {
+      logger.error('Error in sign out:', error)
+      throw new AppError('Sign out failed', 500)
     }
-    
-    return { success: true }
   }
 }

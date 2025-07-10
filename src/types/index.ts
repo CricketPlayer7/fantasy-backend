@@ -26,3 +26,15 @@ export interface SentimentResponse {
   error?: string
   message?: string
 }
+
+export interface MulterFile {
+  fieldname: string
+  originalname: string
+  encoding: string
+  mimetype: string
+  buffer: Buffer
+  size: number
+}
+
+// No need to extend Express Request interface for multer 2.x
+// as the types are already properly defined in @types/multer
