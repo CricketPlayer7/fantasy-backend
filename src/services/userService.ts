@@ -1,8 +1,30 @@
 import { SupabaseClient } from '@supabase/supabase-js'
 import { AppError } from '../utils/errorHandler'
-import { UserActivityLog } from '../types'
+import { UserMetaUpdate, UserMeta, UserActivityLog } from '../types'
 
 export class UserService {
+  async updateUserMeta(supabase: SupabaseClient, userId: string, userData: UserMetaUpdate): Promise<UserMeta> {
+    try {
+      const { data, error } = await supabase
+        .from('user_meta')
+        .update(userData)
+        .eq('user_id', userId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new AppError('Failed to update user meta data', 500)
+      }
+
+      return data as UserMeta
+    } catch (error) {
+      if (error instanceof AppError) {
+        throw error
+      }
+      console.error('Error updating user meta:', error)
+      throw new AppError('Failed to update user meta data', 500)
+    }
+  }
   async trackActivity(supabase: SupabaseClient, userId: string, activityType: string): Promise<any> {
     try {
       if (activityType !== 'login') {

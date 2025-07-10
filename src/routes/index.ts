@@ -8,6 +8,7 @@ import createOrderRouter from './createOrder'
 import cricketRouter from './cricket'
 import profileRouter from './profile'
 import userRouter from './user'
+import userMetaRouter from './user-meta'
 
 const router = express.Router()
 
@@ -20,5 +21,6 @@ router.use('/create-order', createOrderRouter)
 router.use('/cricket', cricketRouter)
 router.use('/profile', profileRouter)
 router.use('/user', userRouter)
+router.use('/user-meta', userMetaRouter)
 
 export default router

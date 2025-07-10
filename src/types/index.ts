@@ -165,5 +165,25 @@ export interface UserActivityLog {
   [key: string]: any
 }
 
+export interface UserMetaUpdate {
+  full_name?: string
+  gender?: 'male' | 'female' | 'other'
+  address?: string
+  city?: string
+  pincode?: number
+  state?: string
+}
+
+export interface UserMeta {
+  user_id: string
+  full_name: string
+  gender: string
+  address: string
+  city: string
+  pincode: number
+  state: string
+  [key: string]: any
+}
+
 // No need to extend Express Request interface for multer 2.x
 // as the types are already properly defined in @types/multer

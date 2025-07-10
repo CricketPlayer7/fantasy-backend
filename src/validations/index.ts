@@ -90,3 +90,12 @@ export const profileGenderSchema = z.object({})
 export const userActivitySchema = z.object({
   activity_type: z.string().min(1, 'Activity type is required')
 })
+
+export const userMetaUpdateSchema = z.object({
+  full_name: z.string().min(1).max(255).optional(),
+  gender: z.enum(['male', 'female', 'other']).optional(),
+  address: z.string().max(500).optional(),
+  city: z.string().max(100).optional(),
+  pincode: z.number().int().min(100000).max(999999).optional(),
+  state: z.string().max(100).optional(),
+})
