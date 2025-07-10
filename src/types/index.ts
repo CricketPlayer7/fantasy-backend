@@ -417,3 +417,9 @@ export interface PaymentMethodQuery {
 	user_id: string
 	method: 'bank' | 'upi'
 }
+
+export interface QuestionInput {
+	match_id: string
+	league_id: string
+	question: string
+}

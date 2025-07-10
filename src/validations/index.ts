@@ -262,3 +262,18 @@ export const paymentDetailsQuerySchema = z.object({
 		errorMap: () => ({ message: 'Method must be either "bank" or "upi"' }),
 	}),
 })
+
+export const getQuestionsQuerySchema = z.object({
+	match_id: z.string().min(1, 'Match ID is required'),
+	league_id: z.string().min(1, 'League ID is required'),
+})
+
+export const saveQuestionsBodySchema = z.object({
+	questions: z.array(
+		z.object({
+			match_id: z.string().min(1),
+			league_id: z.string().min(1),
+			question: z.string().min(1),
+		})
+	),
+})
