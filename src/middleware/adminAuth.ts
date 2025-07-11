@@ -102,9 +102,7 @@ export const adminAuthMiddleware = async (
     }
 
     // Check if user is admin using the RPC function
-    const { data: isAdmin, error: adminError } = await supabaseAdmin.rpc('is_admin', {
-      user_id: user.id
-    })
+    const { data: isAdmin, error: adminError } = await supabase.rpc('is_admin')
 
     if (adminError) {
       logger.error('Error checking admin status:', { 
